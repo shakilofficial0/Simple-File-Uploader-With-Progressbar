@@ -6,16 +6,13 @@
       $file_tmp =$_FILES['file']['tmp_name'];
       $file_type=$_FILES['file']['type'];
       $path = "uploads/".$file_name;
-      // $file_ext=strtolower(end(explode('.',$_FILES['file']['name'])));
+   
       
       $extensions= array("html","php","js");
       
-      // if(in_array($file_ext,$extensions)=== true){
-      //    $errors[]="extension not allowed, please choose a JPEG or PNG file.";
-      // }
-      
+     
       if($file_size < 1){
-         $errors[]='File size must be greater then 1byte';
+         $errors ='Something went wrong! Please try another file.';
       }
       
       if(empty($errors)==true){
