@@ -4,12 +4,17 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="description" content="Dynamic File Uploader to upload file with real time upload progress, total size of file etc.">
+	<meta name="keywords" content="dynamic, uploader, upload, file, realtime, progress, procces, size, etc.">
+	<meta name="author" content="Md. Saifur Rahman and Shakil Ahmed">
+	<meta property="og:image" content="https://i.ibb.co/HtqRhv3/logo.png">
 	<title>Dynamic File Uploader</title>
 	<link rel="shortcut icon" href="https://i.ibb.co/k6ZrV5t/icons8-upload-64.png" type="image/x-icon">
-	<link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap">
 
 	<style>
 	
+
 	body {
 		background: linear-gradient(65deg, #686de0, #6c5ce7) no-repeat;
 		min-height: calc(100vh - 16px);
@@ -133,12 +138,12 @@
 		color: #2c3e50;
 	}
 
-	.section form .hide {
-		visibility: hidden;
-	}
-
 	.section form .show {
 		visibility: visible;
+	}
+
+	.section form .hide {
+		visibility: hidden;
 	}
 
 	@-webkit-keyframes progress-bar-stripes {
@@ -197,7 +202,7 @@
 	}
 
 	.section form .progress-bar-success {
-		background-color: #5cb85c;
+		background-color: #5cb85c !important;
 	}
 
 	.section form .progress-striped .progress-bar-success {
@@ -215,12 +220,14 @@
 		-webkit-box-pack: center;
 		-ms-flex-pack: center;
 		justify-content: center;
+		overflow: hidden;
 	}
 
 	.section .credit span {
 		color: #ecf0f1;
 		text-transform: capitalize;
 	}
+
 	</style>
 </head>
 <body>
@@ -228,7 +235,7 @@
 		<div class="container">
 			<h1 class="title">dynamic file uploader</h1>
 
-			<form id="upload_form" enctype="multipart/form-data" method="POST">
+			<form id="upload_form" enctype="multipart/form-data">
 				<span class="label">tap the plus icon to choose file</span>
 				<input type="file" name="file" id="file" class="file">
 
@@ -244,7 +251,7 @@
 				<button type="button" value="Upload" class="submit" onclick="uploadFile()">Upload</button>
 
 				<div class="progress hide" id="progress-bar-sh">
-					<div id="myBar" class="progress-bar progress-bar-striped  active" style="width:0%">0%</div>
+					<div id="myBar" class="progress-bar progress-bar-striped active" style="width:0%">0%</div>
 				</div>
 				<div id="stats" class="white hide">
 					<h3 id="status"></h3>
@@ -312,10 +319,13 @@
 	}
 
 	function uploadFile() {
-		document.getElementById("progress-bar-sh").classList.add("show");
-		document.getElementById("progress-bar-sh").classList.remove("hide");
-		document.getElementById("stats").classList.add("show");
-		document.getElementById("stats").classList.remove("hide");
+
+		var pbSH = document.getElementById("progress-bar-sh");
+		var stat = document.getElementById("stats");
+		pbSH.classList.add("show");
+		pbSH.classList.remove("hide");
+		stat.classList.add("show");
+		stat.classList.remove("hide");
 
 		var file = _("file").files[0];
 		// alert(file.name+" | "+file.size+" | "+file.type);
@@ -332,6 +342,7 @@
 
 
 	function progressHandler(event) {
+		var link = document.getElementById("status");
 		var elem = document.getElementById("myBar");
 		var percent = (event.loaded / event.total) * 100;
 		var width = Math.round(percent);
@@ -352,12 +363,31 @@
 		_("n_total").innerHTML = +totalr + " MB";
 		_("n_loaded").innerHTML = +loaded + " MB";
 		_("n_per").innerHTML = " (" + width + "%)";
-
+		if(width == 100){
+			elem.classList.add("progress-bar-success");
+			elem.innerHTML = "Complete";
+			link.classList.remove("hide");
+			link.classList.add("show");
+		}
 	}
+
+	document.getElementById("file").addEventListener("click",function() {
+		var pbSH = document.getElementById("progress-bar-sh");
+		var bar = document.getElementById("myBar");
+		var stat = document.getElementById("stats");
+		var link = document.getElementById("status");
+		bar.classList.remove("progress-bar-success");
+		pbSH.classList.add("hide");
+		pbSH.classList.remove("show");
+		stat.classList.remove("show");
+		stat.classList.add("hide");
+		link.classList.add("hide");
+});
 
 	function completeHandler(event) {
 		_("status").innerHTML = event.target.responseText;
-		_("progressBar").value = 1;
+		// _("progressBar").value = 0;
+		
 	}
 
 	function errorHandler(event) {
@@ -367,11 +397,12 @@
 	function abortHandler(event) {
 		_("status").innerHTML = "Upload Aborted";
 	}
+	
 	</script>
 	<script src="https://kit.fontawesome.com/6b46e3b6bd.js" crossorigin="anonymous"></script>
 </body>
 </html>
-    <script>
-	    var elem = document.getElementsByTagName("div")[6];
-        elem.remove();
-	</script>
+<script>
+    var elem = document.getElementsByTagName("div")[6];
+    elem.remove();
+</script>
