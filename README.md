@@ -4,10 +4,6 @@ This uploader is made with Javascript, PHP and CSS. So any host can use this sim
 
 
 
-# Usage
-
-Just Copy and Paste Those files is your Hosting . And Enjoy
-
 # Features
 
  * Awesome UI
@@ -21,4 +17,20 @@ Just Copy and Paste Those files is your Hosting . And Enjoy
  * Total File SIze
 
  * Real Time Uploaded Fize
+
+# Installation
+
+Just Upload the `uploader.php` & `dependency.php`  to your php server(included hosting and other basic server) and Just Run The Uploader.php
+
+
+# Modification
+
+You Can Change name of Uploader.php but if you change name of dependency.php , you have to edit the uploader.php
+
+
+# Contact US
+
+Just Create A Issue For More
+
+
 
