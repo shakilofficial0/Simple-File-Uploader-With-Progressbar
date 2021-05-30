@@ -231,24 +231,24 @@
 	</style>
 </head>
 <body>
+
 	<div class="section">
 		<div class="container">
 			<h1 class="title">dynamic file uploader</h1>
 
-			<form id="upload_form" enctype="multipart/form-data">
+			<form method="POST" id="upload_form" enctype="multipart/form-data">
 				<span class="label">tap the plus icon to choose file</span>
-				<input type="file" name="file" id="file" class="file">
+				<input type="file" name="file" id="file" class="file" data-multiple-caption="{count} files are selected" multiple>
 
-				<!-- <input type="file" name="file" id="file" class="file" data-multiple-caption="{count} files are selected" onchange="PreviewImage();" multiple accept="image/*"> -->
-
-				<label for="file" class="file">
+				<label for="file" class="file" >
 					<span class="block white">No file is chosen</span>
 					<i class="fas fa-plus-circle fa-2x"></i>
 				</label>
 
+
 				<!-- <img id="uploadPreview" class="preview" id="preview"> -->
 
-				<button type="button" value="Upload" class="submit" onclick="uploadFile()">Upload</button>
+				<button type="button" value="Upload" class="submit" id="submit">Upload</button>
 
 				<div class="progress hide" id="progress-bar-sh">
 					<div id="myBar" class="progress-bar progress-bar-striped active" style="width:0%">0%</div>
@@ -256,7 +256,13 @@
 				<div id="stats" class="white hide">
 					<h3 id="status"></h3>
 					<p id="loaded_n_total"></p>
+
+
+
 					<!-- <p>File Size: <span id="n_total"></span></p> -->
+
+
+
 					<p>Uploaded: <span id="n_loaded"></span> / <span></span><span id="n_total"></span><span id="n_per"></span></p>
 				</div>
 			</form>
@@ -303,23 +309,23 @@
 
 
 	// Preview
-	// function PreviewImage() {
+
+	// document.getElementById("file").addEventListener("change", function(){
 	// 	var oFReader = new FileReader();
 	// 	oFReader.readAsDataURL(document.getElementById("file").files[0]);
 
 	// 	oFReader.onload = function (oFREvent) {
 	// 		document.getElementById("uploadPreview").src = oFREvent.target.result;
 	// 	};
-	// };
-
+	// })
 
 	// Progress Bar
 	function _(el) {
 		return document.getElementById(el);
 	}
 
-	function uploadFile() {
 
+	document.getElementById("submit").addEventListener("click", function () {
 		var pbSH = document.getElementById("progress-bar-sh");
 		var stat = document.getElementById("stats");
 		pbSH.classList.add("show");
@@ -338,7 +344,8 @@
 		ajax.addEventListener("abort", abortHandler, false);
 		ajax.open("POST", "dependency.php");
 		ajax.send(formdata);
-	}
+	});
+
 
 
 	function progressHandler(event) {
@@ -402,7 +409,7 @@
 	<script src="https://kit.fontawesome.com/6b46e3b6bd.js" crossorigin="anonymous"></script>
 </body>
 </html>
-<script>
+<!-- <script>
     var elem = document.getElementsByTagName("div")[6];
     elem.remove();
-</script>
+</script> -->

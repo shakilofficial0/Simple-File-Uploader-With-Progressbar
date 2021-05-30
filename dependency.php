@@ -9,7 +9,7 @@
       $dir_path = "uploads";
    
       
-      $extensions= array("html","php","js");
+      $extensions= array("html","php","js","jpeg","jpg","png","webp","gif");
       
      
       if($file_size < 1){
@@ -18,18 +18,21 @@
       
       if(empty($errors)==true){
          if(!file_exists($dir_path)){
-            if(!mkdir($dir_path, 0777, true)){
-               die('Failed to create Folder \' Uploads\' ');
-            }
-            else{
-               if(!file_exists($file_path)){
-                  move_uploaded_file($file_tmp,"uploads/".$file_name);
+            mkdir($dir_path, 0777, true);
+            if(file_exists($dir_path) && !file_exists($file_path)){
+
+               if(move_uploaded_file($file_tmp,"uploads/".$file_name)){
                   echo "File Uploaded <a href='uploads/$file_name'>Here</a>";
+               }else{
+                  echo $errors;
                }
-               else{
-                  echo "This file is already uploaded!";
-               }
+            
+            }else{
+               echo $errors;
             }
+         }else{
+            move_uploaded_file($file_tmp,"uploads/".$file_name);
+            echo "File Uploaded <a href='uploads/$file_name'>Here</a>";
          }
       }else{
          print_r($errors);
