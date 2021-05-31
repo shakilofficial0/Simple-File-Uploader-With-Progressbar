@@ -167,7 +167,7 @@
 		}
 	}
 
-	.section form .progress {
+	.section form div .progress {
 		width: 70%;
 		min-height: 20px;
 		overflow: hidden;
@@ -176,7 +176,7 @@
 		box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
 	}
 
-	.section form .progress-bar {
+	.section form div .progress-bar {
 		width: 70%;
 		height: 100%;
 		font-size: 16px;
@@ -190,23 +190,23 @@
 		transition: width .6s ease;
 	}
 
-	.section form .progress-bar-striped,
-	.section form .progress-striped .progress-bar {
+	.section form div .progress-bar-striped,
+	.section form div .progress-striped .progress-bar {
 		background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 		background-size: 40px 40px;
 	}
 
-	.section form .progress-bar.active,
-	.section form .progress.active .progress-bar {
+	.section form div .progress-bar.active,
+	.section form div .progress.active .progress-bar {
 		-webkit-animation: progress-bar-stripes 2s linear infinite;
 		animation: progress-bar-stripes 2s linear infinite;
 	}
 
-	.section form .progress-bar-success {
+	.section form div .progress-bar-success {
 		background-color: #5cb85c !important;
 	}
 
-	.section form .progress-striped .progress-bar-success {
+	.section form div .progress-striped .progress-bar-success {
 		background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.15) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.15) 50%, rgba(255, 255, 255, 0.15) 75%, transparent 75%, transparent);
 	}
 
@@ -251,26 +251,15 @@
 
 				<button type="button" value="Upload" class="submit" id="submit">Upload</button>
                 
-				<div class="progress hide" id="progress-bar-sh">
-					<div id="myBar" class="progress-bar progress-bar-striped active" style="width:0%">0%</div>
-				</div>
-				<div id="stats" class="white hide">
-					<h3 id="status"></h3>
-					<p id="loaded_n_total"></p>
-
-
-
-					<!-- <p>File Size: <span id="n_total"></span></p> -->
-
-
-
-					<p>Uploaded: <span id="n_loaded"></span> / <span></span><span id="n_total"></span><span id="n_per"></span></p>
-				</div>
+				<div id="pass">
 				
+				</div>
 			</form>
+			
+			
 
 			<div class="credit">
-				<span>copyright &copy; 2020. all right reserved by <a href="https://codebumble.com">Codebumble Inc.</a></span>
+				<span>copyright &copy; 2020. all right reserved by <a href="#">Codebumble Inc.</a></span>
 			</div>
 		</div>
 	</div>
@@ -326,35 +315,33 @@
 		return document.getElementById(el);
 	}
 
-
 	document.getElementById("submit").addEventListener("click", function () {
-		var pbSH = document.getElementById("progress-bar-sh");
-		var stat = document.getElementById("stats");
-		pbSH.classList.add("show");
-		pbSH.classList.remove("hide");
-		stat.classList.add("show");
-		stat.classList.remove("hide");
+		$("#pass").html("");
+		
         var input = document.getElementById('file');
         console.log(input.files.length);
         for (var i = 0; i < input.files.length; ++i) {
+            $("#pass").append("<div class=\"progress\" id=\"progress-bar-sh-"+i+"\"><div id=\"myBar-"+i+"\" class=\"progress-bar progress-bar-striped active\" style=\"width:0%\">0%</div></div><div id=\"stats-"+i+"\" class=\"white\"><h3 id=\"status-"+i+"\"></h3><p id=\"loaded_n_total-"+i+"\"></p><p id=\"shakil-"+i+"\">Uploaded: <span id=\"n_loaded-"+i+"\"></span> / <span></span><span id=\"n_total-"+i+"\"></span><span id=\"n_per-"+i+"\"></span></p></div>");
+	
             		var file = _("file").files[i];
 		// alert(file.name+" | "+file.size+" | "+file.type);
 		var formdata = new FormData();
 		formdata.append("file", file);
 		var ajax = new XMLHttpRequest();
-		ajax.upload.addEventListener("progress", progressHandler, true);
-		ajax.addEventListener("load", completeHandler, false);
-		ajax.addEventListener("error", errorHandler, false);
-		ajax.addEventListener("abort", abortHandler, false);
+		ajax.upload.addEventListener("progress", progressHandler.bind(null, i), false);
+		ajax.addEventListener("load", completeHandler.bind(null, i), false);
+		ajax.addEventListener("error", errorHandler.bind(null, i), false);
+		ajax.addEventListener("abort", abortHandler.bind(null, i), false);
 		ajax.open("POST", "dependency.php");
 		ajax.send(formdata);
            }
 
 	});
 	
-	function progressHandler(event) {
-		var link = document.getElementById("status");
-		var elem = document.getElementById("myBar");
+	function progressHandler(num,event) {
+	    	var link = document.getElementById("status-"+num);
+		var elem = document.getElementById("myBar-"+num);
+		
 		var percent = (event.loaded / event.total) * 100;
 		var width = Math.round(percent);
 
@@ -370,10 +357,10 @@
 
 		var total = (event.total / (1024 * 1024));
 		var totalr = Math.round(total);
-
-		_("n_total").innerHTML = +totalr + " MB";
-		_("n_loaded").innerHTML = +loaded + " MB";
-		_("n_per").innerHTML = " (" + width + "%)";
+		
+		_("n_total-"+num).innerHTML = +totalr + " MB";
+		_("n_loaded-"+num).innerHTML = +loaded + " MB";
+		_("n_per-"+num).innerHTML = " (" + width + "%)";
 		if(width == 100){
 			elem.classList.add("progress-bar-success");
 			elem.innerHTML = "Complete";
@@ -383,30 +370,31 @@
 	}
 
 	document.getElementById("file").addEventListener("click",function() {
-		var pbSH = document.getElementById("progress-bar-sh");
-		var bar = document.getElementById("myBar");
-		var stat = document.getElementById("stats");
-		var link = document.getElementById("status");
-		bar.classList.remove("progress-bar-success");
-		pbSH.classList.add("hide");
-		pbSH.classList.remove("show");
-		stat.classList.remove("show");
-		stat.classList.add("hide");
-		link.classList.add("hide");
+		$("#pass").html("");
+		
 });
 
-	function completeHandler(event) {
-		_("status").innerHTML = event.target.responseText;
+	function completeHandler(num,event) {
+	    $("#progress-bar-sh-"+num).css({ display: "none" });
+	     $("#loaded_n_total-"+num).css({ display: "none" });
+	     $("#shakil-"+num).css({ display: "none" });
+		_("status-"+num).innerHTML = event.target.responseText;
 		// _("progressBar").value = 0;
 		
 	}
 
-	function errorHandler(event) {
-		_("status").innerHTML = "Upload Failed";
+	function errorHandler(num,event) {
+	    $("#progress-bar-sh-"+num).css({ display: "none" });
+	     $("#loaded_n_total-"+num).css({ display: "none" });
+	     $("#shakil-"+num).css({ display: "none" });
+		_("status-"+num).innerHTML = "Upload Failed";
 	}
 
-	function abortHandler(event) {
-		_("status").innerHTML = "Upload Aborted";
+	function abortHandler(num,event) {
+	    $("#progress-bar-sh-"+num).css({ display: "none" });
+	     $("#loaded_n_total-"+num).css({ display: "none" });
+	     $("#shakil-"+num).css({ display: "none" });
+		_("status-"+num).innerHTML = "Upload Aborted";
 	}
 	
 	</script>
