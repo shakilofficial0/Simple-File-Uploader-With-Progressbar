@@ -147,6 +147,10 @@
 		visibility: hidden;
 	}
 
+	.section form #pass{
+		width: 70%;
+	}
+
 	@-webkit-keyframes progress-bar-stripes {
 		from {
 			background-position: 40px 0;
@@ -168,7 +172,7 @@
 	}
 
 	.section form div .progress {
-		width: 70%;
+		width: 100%;
 		min-height: 20px;
 		overflow: hidden;
 		background: #f5f5f5;
