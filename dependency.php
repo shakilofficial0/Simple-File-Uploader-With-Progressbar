@@ -22,7 +22,7 @@
             if(file_exists($dir_path) && !file_exists($file_path)){
 
                if(move_uploaded_file($file_tmp,"uploads/".$file_name)){
-                  echo "File Uploaded <a href='uploads/$file_name'>Here</a>";
+                  echo "File : <a href='uploads/$file_name'>$file_name</a>";
                }else{
                   echo $errors;
                }
@@ -32,7 +32,7 @@
             }
          }else{
             move_uploaded_file($file_tmp,"uploads/".$file_name);
-            echo "File Uploaded <a href='uploads/$file_name'>Here</a>";
+            echo "File : <a href='uploads/$file_name'>$file_name</a>";
          }
       }else{
          print_r($errors);
