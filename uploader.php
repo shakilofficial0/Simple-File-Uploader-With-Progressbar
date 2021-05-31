@@ -11,6 +11,7 @@
 	<title>Dynamic File Uploader</title>
 	<link rel="shortcut icon" href="https://i.ibb.co/k6ZrV5t/icons8-upload-64.png" type="image/x-icon">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&display=swap">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 	<style>
 	
@@ -238,7 +239,7 @@
 
 			<form method="POST" id="upload_form" enctype="multipart/form-data">
 				<span class="label">tap the plus icon to choose file</span>
-				<input type="file" name="file" id="file" class="file" data-multiple-caption="{count} files are selected" multiple>
+				<input type="file" name="file[]" id="file" class="file" data-multiple-caption="{count} files are selected" multiple>
 
 				<label for="file" class="file" >
 					<span class="block white">No file is chosen</span>
@@ -249,7 +250,7 @@
 				<!-- <img id="uploadPreview" class="preview" id="preview"> -->
 
 				<button type="button" value="Upload" class="submit" id="submit">Upload</button>
-
+                
 				<div class="progress hide" id="progress-bar-sh">
 					<div id="myBar" class="progress-bar progress-bar-striped active" style="width:0%">0%</div>
 				</div>
@@ -265,10 +266,11 @@
 
 					<p>Uploaded: <span id="n_loaded"></span> / <span></span><span id="n_total"></span><span id="n_per"></span></p>
 				</div>
+				
 			</form>
 
 			<div class="credit">
-				<span>copyright &copy; 2020. all right reserved by <a href="#">united ethical hackers team.</a></span>
+				<span>copyright &copy; 2020. all right reserved by <a href="https://codebumble.com">Codebumble Inc.</a></span>
 			</div>
 		</div>
 	</div>
@@ -332,22 +334,24 @@
 		pbSH.classList.remove("hide");
 		stat.classList.add("show");
 		stat.classList.remove("hide");
-
-		var file = _("file").files[0];
+        var input = document.getElementById('file');
+        console.log(input.files.length);
+        for (var i = 0; i < input.files.length; ++i) {
+            		var file = _("file").files[i];
 		// alert(file.name+" | "+file.size+" | "+file.type);
 		var formdata = new FormData();
 		formdata.append("file", file);
 		var ajax = new XMLHttpRequest();
-		ajax.upload.addEventListener("progress", progressHandler, false);
+		ajax.upload.addEventListener("progress", progressHandler, true);
 		ajax.addEventListener("load", completeHandler, false);
 		ajax.addEventListener("error", errorHandler, false);
 		ajax.addEventListener("abort", abortHandler, false);
 		ajax.open("POST", "dependency.php");
 		ajax.send(formdata);
+           }
+
 	});
-
-
-
+	
 	function progressHandler(event) {
 		var link = document.getElementById("status");
 		var elem = document.getElementById("myBar");
