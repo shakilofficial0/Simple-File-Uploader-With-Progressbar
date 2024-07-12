@@ -36,5 +36,23 @@ You Can Change name of Uploader.php but if you change name of dependency.php , y
 
 Just Create A Issue For More
 
+# Docker
+
+Download The File from this Repository
+
+```
+docker build -t php-file-uploader .
+
+```
+
+Use this to Create Your Own Docker Image. Here ```php-file-uploader``` is the image name. You can change it by your own.
+
+## Docker Run Command
+
+``` docker run -d -p 80:80 --name my-php-app php-file-uploader```
+
+Here ```my-php-app``` is your container name and ```php-file-uploader``` is your docker image name. you can see the uploader on ```http://localhost``` url from Browser.
+
+
 
 
