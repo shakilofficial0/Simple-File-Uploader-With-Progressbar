@@ -263,7 +263,7 @@
 			
 
 			<div class="credit">
-				<span>copyright &copy; 2020. all right reserved by <a href="#">Codebumble Inc.</a></span>
+				<span>copyright &copy; 2024. all right reserved by <a href="https://codebumble.net">Codebumble Inc.</a></span>
 			</div>
 		</div>
 	</div>
