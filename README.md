@@ -38,7 +38,12 @@ Just Create A Issue For More
 
 # Docker
 
-Download The File from this Repository
+Use docker command to pull the image from docker hub:
+```
+docker pull shakilofficial0/simple-file-uploader-with-progressbar:latest
+```
+
+or Build Image by Downloading The File from this Repository
 
 ```
 docker build -t php-file-uploader .
