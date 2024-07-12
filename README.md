@@ -42,6 +42,8 @@ Just Create A Issue For More
 
 [![Deploy](https://quintagroup.com/cms/technology/Images/docker-button.jpg/@@images/image.jpeg)](https://hub.docker.com/r/shakilofficial0/simple-file-uploader-with-progressbar)
 
+<a href="https://hub.docker.com/r/shakilofficial0/simple-file-uploader-with-progressbar"><img src="https://quintagroup.com/cms/technology/Images/docker-button.jpg/@@images/image.jpeg" align="left" height="48" ></a>
+
 ## Pull or Build Image
 
 Use docker command to pull the image from docker hub:
