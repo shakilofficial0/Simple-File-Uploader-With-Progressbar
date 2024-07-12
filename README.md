@@ -27,6 +27,10 @@ Just Upload the `uploader.php` & `dependency.php`  to your php server(included h
 
 You Can Change name of Uploader.php but if you change name of dependency.php , you have to edit the uploader.php
 
+# Demo View
+<img src="https://raw.githubusercontent.com/shakilofficial0/Simple-File-Uploader-With-Progressbar/master/images/973shots_so.jpeg"  alt="Demo 1">
+
+<img src="https://raw.githubusercontent.com/shakilofficial0/Simple-File-Uploader-With-Progressbar/master/images/298shots_so.jpeg"  alt="Demo 2">
 
 # Contact US
 
